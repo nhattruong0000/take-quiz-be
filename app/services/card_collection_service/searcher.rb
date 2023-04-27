@@ -2,8 +2,8 @@ include Pagy::Backend
 
 module CardCollectionService
   module Searcher
-    def self.card_collection(params)
-      @query = CardCollection.ransack(params[:query])
+    def self.card_collection(params, current_user)
+      @query = current_user.card_collections.ransack(params[:query])
       current_page = params[:page] || 1
       @query.sorts = ['name asc'] if @query.sorts.empty?
       data_obj = {}
