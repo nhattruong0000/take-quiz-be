@@ -2,7 +2,7 @@ class Api::V1::Workplace::CardCollectionController < Api::V1::Workplace::Workpla
   before_action :set_card_collection, only: [:show, :update, :destroy, :cards]
 
   def index
-    return_obj = CardCollectionService::Searcher.card_collection(params, current_user)
+    return_obj = CardCollectionService::Searcher.card_collections(params, current_user)
     render json: return_obj, status: :ok
   end
 

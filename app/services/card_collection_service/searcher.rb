@@ -2,7 +2,7 @@ include Pagy::Backend
 
 module CardCollectionService
   module Searcher
-    def self.card_collection(params, current_user)
+    def self.card_collections(params, current_user)
       @query = current_user.card_collections.ransack(params[:query])
       current_page = params[:page] || 1
       @query.sorts = ['name asc'] if @query.sorts.empty?
@@ -25,7 +25,7 @@ module CardCollectionService
       @query.sorts = ['name asc'] if @query.sorts.empty?
       data_obj = {}
       pagy, card_list = pagy @query.result, items: params[:items], page: current_page
-      data_obj[:cards] = CardCollectionService::Serializer.card card_list
+      data_obj[:cards] = CardService::Serializer.card card_list
       data_obj[:current_page] = pagy.page
       data_obj[:total_page] = pagy.pages
       data_obj[:total_records] = pagy.count

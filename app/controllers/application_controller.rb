@@ -2,8 +2,8 @@ class ApplicationController < ActionController::API
   include ActionController::Cookies
   include Pagy::Backend
   include ActionController::Helpers
-  include Response
-  include ExceptionHandler
+  # include Response
+  # include ExceptionHandler
   before_action :authentication_user!
 
   helper_method :current_user
