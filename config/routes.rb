@@ -12,14 +12,14 @@ Rails.application.routes.draw do
   post 'authentication/change_password_with_token', to: 'authentication#change_password_with_token'
   get 'authentication/auth_verify', to: 'authentication#auth_verify'
 
-  # namespace :api, as: '' do
-  #   namespace :v1, as: '' do
-  #     namespace :workplace, as: '' do
-  #       get 'dashboard/', to: 'dashboard#index'
-  #       resources :card_collection, only: [:index, :show, :create, :update, :destroy]
-  #       get 'card_collection/:id/cards', to: 'card_collection#cards'
-  #     end
-  #   end
-  # end
+  namespace :api, as: '' do
+    namespace :v1, as: '' do
+      namespace :workplace, as: '' do
+        get 'dashboard/', to: 'dashboard#index'
+        resources :card_collection, only: [:index, :show, :create, :update, :destroy]
+        get 'card_collection/:id/cards', to: 'card_collection#cards'
+      end
+    end
+  end
 
 end
