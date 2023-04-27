@@ -1,19 +1,19 @@
 class Api::V1::Workplace::CardController < Api::V1::Workplace::WorkplaceBaseController
-
-  before_action :set_card_collection, only: [:create, :update, :destroy, :cards]
+  before_action :set_card_collection, only: [:create, :update, :destroy]
 
   def create
-    ap card_params
     return_obj = CardService::Builder.create(card_params[:cards], @card_collection, current_user)
     render json: return_obj, status: :ok
   end
 
   def update
-    # TODO update card
+    return_obj = CardService::Builder.update(card_params[:cards], @card_collection, current_user)
+    render json: return_obj, status: :ok
   end
 
   def destroy
-    # TODO destroy card
+    return_obj = CardService::Builder.destroy(card_params[:cards], @card_collection, current_user)
+    render json: return_obj, status: :ok
   end
 
   private
@@ -28,7 +28,7 @@ class Api::V1::Workplace::CardController < Api::V1::Workplace::WorkplaceBaseCont
   end
 
   def card_params
-    params[:obj].permit(:card_collection_id, cards: [:question, :answer])
+    params[:obj].permit(:card_collection_id, cards: [:id, :question, :answer])
   end
 
 end

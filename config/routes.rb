@@ -20,6 +20,8 @@ Rails.application.routes.draw do
         get 'card_collection/:id/cards', to: 'card_collection#cards'
 
         resources :card, only: [:create]
+        patch 'card/', to: 'card#update'
+        delete 'card/', to: 'card#destroy'
       end
     end
   end
