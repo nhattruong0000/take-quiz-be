@@ -62,4 +62,8 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+  config.x.oauth.jwt_secret = 'dedd5478-9df2-49d6-b7dc-610623e0fc58'
+  config.x.oauth.aud = '866ac26d-fb6a-49af-a80d-e6fc7e4c7501'
+  config.x.oauth.iss = 'takequiz-api'
+  config.x.oauth.default_exp = 24 * 60 * 60 #minutes
 end
