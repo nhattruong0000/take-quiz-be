@@ -22,6 +22,8 @@ Rails.application.routes.draw do
         resources :card, only: [:create]
         patch 'card/', to: 'card#update'
         delete 'card/', to: 'card#destroy'
+
+        resources :study_session, only: [:create]
       end
     end
   end

@@ -55,35 +55,52 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_082034) do
   create_table "study_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "card_id", null: false
     t.uuid "study_session_id", null: false
-    t.string "result"
+    t.integer "question_type", null: false
+    t.jsonb "questions", null: false
+    t.jsonb "answers", null: false
+    t.jsonb "results", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["answers"], name: "index_study_cards_on_answers", using: :gin
     t.index ["card_id"], name: "index_study_cards_on_card_id"
-    t.index ["result"], name: "index_study_cards_on_result", opclass: :gin_trgm_ops, using: :gin
+    t.index ["questions"], name: "index_study_cards_on_questions", using: :gin
+    t.index ["results"], name: "index_study_cards_on_results", using: :gin
     t.index ["study_session_id"], name: "index_study_cards_on_study_session_id"
   end
 
   create_table "study_sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "card_collection_id", null: false
     t.string "status", default: "acive"
+    t.jsonb "configs", default: {}
+    t.integer "order_no"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_study_sessions_on_status", opclass: :gin_trgm_ops, using: :gin
   end
 
   create_table "test_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "card_id", null: false
     t.uuid "test_session_id", null: false
-    t.string "result"
+    t.jsonb "questions", null: false
+    t.jsonb "answers", null: false
+    t.jsonb "results", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["answers"], name: "index_test_cards_on_answers", using: :gin
     t.index ["card_id"], name: "index_test_cards_on_card_id"
-    t.index ["result"], name: "index_test_cards_on_result", opclass: :gin_trgm_ops, using: :gin
+    t.index ["questions"], name: "index_test_cards_on_questions", using: :gin
+    t.index ["results"], name: "index_test_cards_on_results", using: :gin
     t.index ["test_session_id"], name: "index_test_cards_on_test_session_id"
   end
 
   create_table "test_sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "card_collection_id", null: false
     t.string "status", default: "acive"
+    t.jsonb "configs", default: {}
+    t.integer "order_no"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_test_sessions_on_status", opclass: :gin_trgm_ops, using: :gin
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

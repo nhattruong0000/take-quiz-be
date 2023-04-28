@@ -1,4 +1,4 @@
-class Api::V1::Workplace::CardPolicy < ApplicationPolicy
+class Api::V1::Workplace::StudySessionPolicy < ApplicationPolicy
 
   def initialize(user, record)
     super(user, record)

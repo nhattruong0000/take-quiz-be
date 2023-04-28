@@ -15,7 +15,7 @@ module CardService
     def self.update(card_params, card_collection, current_user)
       card_need_to_save = []
       card_hash_by_id = card_params.map { |r| [r['id'], r] }.to_h
-      cards = Card.where(id: card_params.map { |item| item[:id] })
+      cards = Card.where(id: card_params.map { |item| item[:id] }, card_collection_id: card_collection.id, user_id: current_user.id)
       cards.each do |card|
         card.question = card_hash_by_id[card.id][:question]
         card.answer = card_hash_by_id[card.id][:answer]
@@ -31,7 +31,7 @@ module CardService
     end
 
     def self.destroy(card_params, card_collection, current_user)
-      cards = Card.where(id: card_params.map { |item| item[:id] })
+      cards = Card.where(id: card_params.map { |item| item[:id] }, card_collection_id: card_collection.id, user_id: current_user.id)
       Card.transaction do
         cards.update_all(status: 'deleted')
       end
