@@ -14,19 +14,21 @@ module QuestionService
           question_obj['question'] = is_card_question ? card.question : card.answer
           question_obj['is_card_question'] = is_card_question
 
-          result_obj['results'] = [is_card_question ? card.answer : card.question]
+          result_obj['result_list'] = [is_card_question ? card.answer : card.question]
           result_obj['is_multiple_result'] = false
 
           answer_arr = [is_card_question ? card.answer : card.question]
-          answer_arr << is_card_question ? list_answer.excluding(card.answer).sample(3) : list_question.excluding(card.question).sample(3)
-          answer_obj['answers'] = answer_arr
+          answer_arr =  answer_arr + (is_card_question ? list_answer.uniq.excluding(card.answer).sample(3) : list_question.uniq.excluding(card.question).sample(3))
+
+          answer_obj['answer_list'] = answer_arr
         else
           is_right_as_the_answer = [true, false].sample #result right as the answer
           question_obj['question'] = "#{card.question} => #{list_answer.sample}"
           question_obj['question'] = "#{card.question} => #{card.answer}" if is_right_as_the_answer
 
-          result_obj['results'] = [is_right_as_the_answer]
+          result_obj['result_list'] = [is_right_as_the_answer]
           result_obj['is_multiple_result'] = false
+          result_obj['answered'] = false
           answer_obj['answers'] = [true, false]
         end
 
@@ -36,7 +38,9 @@ module QuestionService
           answers: answer_obj,
           results: result_obj
         }
+
       end
+      return_obj
     end
   end
 end

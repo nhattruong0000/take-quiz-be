@@ -38,7 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_082034) do
     t.integer "study_count", default: 0
     t.datetime "study_last_time"
     t.integer "order_no", default: 0
-    t.string "status", default: "acive"
+    t.string "status", default: "active"
     t.boolean "is_public", default: false
     t.uuid "card_collection_id", null: false
     t.uuid "user_id", null: false
@@ -70,7 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_082034) do
 
   create_table "study_sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "card_collection_id", null: false
-    t.string "status", default: "acive"
+    t.string "status", default: "active"
     t.jsonb "configs", default: {}
     t.integer "order_no"
     t.datetime "created_at", null: false
@@ -95,7 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_082034) do
 
   create_table "test_sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "card_collection_id", null: false
-    t.string "status", default: "acive"
+    t.string "status", default: "active"
     t.jsonb "configs", default: {}
     t.integer "order_no"
     t.datetime "created_at", null: false
@@ -128,6 +128,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_082034) do
     t.boolean "must_change_password", default: false
     t.string "initial_password", default: ""
     t.string "role", default: "customer"
+    t.string "locale", default: "en"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true

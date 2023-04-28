@@ -37,6 +37,7 @@ class User < ActiveRecord::Migration[7.0]
       t.boolean :must_change_password, default: false
       t.string :initial_password, default: ''
       t.string :role, default: 'customer'
+      t.string :locale, default: 'en'
     end
 
     # add_index :users, :email, unique: true

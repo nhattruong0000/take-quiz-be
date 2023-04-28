@@ -23,6 +23,7 @@ Rails.application.routes.draw do
         patch 'card/', to: 'card#update'
         delete 'card/', to: 'card#destroy'
 
+        patch 'study_session/:id/study_card/:study_card_id', to: 'study_session#answer_study_card'
         resources :study_session, only: [:create]
       end
     end

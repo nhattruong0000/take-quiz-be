@@ -8,13 +8,11 @@ class Api::V1::Workplace::StudySessionPolicy < ApplicationPolicy
     STUDENT_DEFAULT_ROLES.include?(user.role)
   end
 
-  def update?
+  def answer_study_card?
     STUDENT_DEFAULT_ROLES.include?(user.role)
   end
 
-  def destroy?
-    STUDENT_DEFAULT_ROLES.include?(user.role)
-  end
+
 
   class Scope < Scope
     def resolve

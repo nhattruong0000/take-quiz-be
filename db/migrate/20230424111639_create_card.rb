@@ -10,7 +10,7 @@ class CreateCard < ActiveRecord::Migration[7.0]
       t.integer :study_count, default: 0
       t.datetime :study_last_time
       t.integer :order_no, default: 0
-      t.string :status, default: 'acive'
+      t.string :status, default: 'active'
       t.boolean :is_public, default: false
       t.uuid :card_collection_id, null: false
       t.uuid :user_id, null: false

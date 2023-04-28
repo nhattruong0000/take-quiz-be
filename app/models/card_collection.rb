@@ -3,8 +3,4 @@ class CardCollection < ApplicationRecord
 
   belongs_to :user, class_name: 'User', foreign_key: :user_id, primary_key: :id, optional: true
 
-  # def self.ransackable_attributes(auth_object = nil)
-  #   ["created_at", "description", "id", "name", "status", "updated_at", "user_id"]
-  # end
-
 end

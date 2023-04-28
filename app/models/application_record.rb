@@ -44,4 +44,5 @@ class ApplicationRecord < ActiveRecord::Base
   def self.update_success_message
     "Update #{self.model_name.singular_route_key} successfully."
   end
+
 end
