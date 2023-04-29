@@ -4,6 +4,7 @@ module TestService
       authorized = CardCollectionService::Validator.check_card_collection_authorized(card_collection, current_user)
       return RenderUtil.render_json_obj("You aren't authorized on card collection") unless authorized
 
+      test_params = QuestionService::Util.default_configs(test_params)
 
       test_cards = []
       test_session = nil
@@ -15,7 +16,7 @@ module TestService
           )
         number_of_question = test_params[:configs][:question_count]
         cards = card_collection.cards.sample(number_of_question)
-        questions = QuestionService::Builder.question_generator(cards)
+        questions = QuestionService::Builder.question_generator(cards, test_params)
         cards.each do |card|
           test_cards << TestCard.new(
             card_id: card.id,

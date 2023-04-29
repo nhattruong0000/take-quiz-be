@@ -1,18 +1,19 @@
 module QuestionService
   module Builder
-    def self.question_generator(cards)
+    def self.question_generator(cards, config_params)
       return_obj = {}
       list_answer = cards.pluck(:answer)
       list_question = cards.pluck(:question)
       cards.each do |card|
-        question_type = rand(0..1) #random question
+        question_type = get_question_type(config_params)
         question_obj = {}
         answer_obj = {}
         result_obj = {}
         if(question_type == 0)
-          is_card_question = [true, false].sample #is card question is question of this item
+          is_card_question = get_card_question_type(config_params) #is card question is question of this item
+          ap "is_card_question = get_card_question_type(config_params) #{is_card_question}"
           question_obj['question'] = is_card_question ? card.question : card.answer
-          question_obj['is_card_question'] = is_card_question
+          question_obj['definition_as_question'] = is_card_question
 
           result_obj['result_list'] = [is_card_question ? card.answer : card.question]
           result_obj['is_multiple_result'] = false
@@ -41,6 +42,23 @@ module QuestionService
 
       end
       return_obj
+    end
+
+    private
+    def self.get_question_type(config_params)
+      question_type = rand(0..1)
+      if config_params[:configs].has_key?(:question_type)
+        question_type = config_params[:configs][:question_type].to_i
+      end
+      question_type
+    end
+
+    def self.get_card_question_type(config_params)
+      definition_as_question = [true, false].sample
+      if config_params[:configs].has_key?(:definition_as_question)
+        definition_as_question = config_params[:configs][:definition_as_question]
+      end
+      definition_as_question
     end
   end
 end

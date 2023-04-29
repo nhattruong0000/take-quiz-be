@@ -4,6 +4,7 @@ module StudyService
       authorized = CardCollectionService::Validator.check_card_collection_authorized(card_collection, current_user)
       return RenderUtil.render_json_obj("You aren't authorized on card collection") unless authorized
 
+      study_params = QuestionService::Util.default_configs(study_params)
 
       study_cards = []
       study_session = nil
@@ -13,9 +14,10 @@ module StudyService
           configs: study_params[:configs],
           card_collection_id: card_collection.id,
           )
-        number_of_question = study_params[:configs][:question_count]
+        ap study_params
+        number_of_question = study_params[:configs][:question_count] || 5
         cards = card_collection.cards.sample(number_of_question)
-        questions = QuestionService::Builder.question_generator(cards)
+        questions = QuestionService::Builder.question_generator(cards, study_params)
         cards.each do |card|
           study_cards << StudyCard.new(
             card_id: card.id,
