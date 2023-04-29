@@ -3,6 +3,7 @@ class CreateTestCard < ActiveRecord::Migration[7.0]
     create_table :test_cards, id: :uuid do |t|
       t.uuid :card_id, null: false
       t.uuid :test_session_id, null: false
+      t.integer :question_type, null: false #0: true in list, 1: true or false
       t.jsonb :questions, null: false
       t.jsonb :answers, null: false
       t.jsonb :results, null: false

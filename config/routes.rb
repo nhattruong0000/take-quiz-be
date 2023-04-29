@@ -25,6 +25,9 @@ Rails.application.routes.draw do
 
         patch 'study_session/:id/study_card/:study_card_id', to: 'study_session#answer_study_card'
         resources :study_session, only: [:create]
+
+        patch 'test_session/:id/test_card/:test_card_id', to: 'test_session#answer_test_card'
+        resources :test_session, only: [:create]
       end
     end
   end

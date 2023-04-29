@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_082034) do
   create_table "test_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "card_id", null: false
     t.uuid "test_session_id", null: false
+    t.integer "question_type", null: false
     t.jsonb "questions", null: false
     t.jsonb "answers", null: false
     t.jsonb "results", null: false
