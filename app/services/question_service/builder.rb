@@ -11,7 +11,6 @@ module QuestionService
         result_obj = {}
         if(question_type == 0)
           is_card_question = get_card_question_type(config_params) #is card question is question of this item
-          ap "is_card_question = get_card_question_type(config_params) #{is_card_question}"
           question_obj['question'] = is_card_question ? card.question : card.answer
           question_obj['definition_as_question'] = is_card_question
 

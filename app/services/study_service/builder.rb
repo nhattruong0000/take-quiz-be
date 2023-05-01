@@ -14,7 +14,6 @@ module StudyService
           configs: study_params[:configs],
           card_collection_id: card_collection.id,
           )
-        ap study_params
         number_of_question = study_params[:configs][:question_count] || 5
         cards = card_collection.cards.sample(number_of_question)
         questions = QuestionService::Builder.question_generator(cards, study_params)
