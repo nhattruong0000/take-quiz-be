@@ -12,6 +12,10 @@ class Api::V1::Workplace::TestSessionPolicy < ApplicationPolicy
     STUDENT_DEFAULT_ROLES.include?(user.role)
   end
 
+  def submit_test?
+    STUDENT_DEFAULT_ROLES.include?(user.role)
+  end
+
 
 
   class Scope < Scope

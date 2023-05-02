@@ -4,6 +4,7 @@ class CreateStudyCard < ActiveRecord::Migration[7.0]
       t.uuid :card_id, null: false
       t.uuid :study_session_id, null: false
       t.integer :question_type, null: false #0: true in list, 1: true or false
+      t.string :status, default: 'active'
       t.jsonb :questions, null: false
       t.jsonb :answers, null: false
       t.jsonb :results, null: false

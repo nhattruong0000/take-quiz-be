@@ -5,6 +5,7 @@ class CreateStudySession < ActiveRecord::Migration[7.0]
       t.string :status, default: 'active'
       t.jsonb :configs, default: {}
       t.integer :order_no, autoincrement: true
+      t.jsonb :results
       t.timestamps
     end
 

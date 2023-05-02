@@ -27,6 +27,7 @@ Rails.application.routes.draw do
         resources :study_session, only: [:create]
 
         patch 'test_session/:id/test_card/:test_card_id', to: 'test_session#answer_test_card'
+        put 'test_session/:id/submit_test/', to: 'test_session#submit_test'
         resources :test_session, only: [:create]
       end
     end

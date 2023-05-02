@@ -56,6 +56,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_082034) do
     t.uuid "card_id", null: false
     t.uuid "study_session_id", null: false
     t.integer "question_type", null: false
+    t.string "status", default: "active"
     t.jsonb "questions", null: false
     t.jsonb "answers", null: false
     t.jsonb "results", null: false
@@ -73,6 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_082034) do
     t.string "status", default: "active"
     t.jsonb "configs", default: {}
     t.integer "order_no"
+    t.jsonb "results"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["status"], name: "index_study_sessions_on_status", opclass: :gin_trgm_ops, using: :gin
@@ -82,6 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_082034) do
     t.uuid "card_id", null: false
     t.uuid "test_session_id", null: false
     t.integer "question_type", null: false
+    t.string "status", default: "active"
     t.jsonb "questions", null: false
     t.jsonb "answers", null: false
     t.jsonb "results", null: false
@@ -99,6 +102,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_082034) do
     t.string "status", default: "active"
     t.jsonb "configs", default: {}
     t.integer "order_no"
+    t.jsonb "results"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["status"], name: "index_test_sessions_on_status", opclass: :gin_trgm_ops, using: :gin

@@ -2,6 +2,7 @@ class Api::V1::Workplace::StudySessionController < Api::V1::Workplace::Workplace
 
   before_action :set_card_collection, only: [:create]
   before_action :set_study_card, only: [:answer_study_card]
+  before_action :set_study_session, only: [:answer_study_card]
 
   def create
     return_obj = StudyService::Builder.generate_study_session(study_session_params, @card_collection, current_user)
@@ -9,7 +10,7 @@ class Api::V1::Workplace::StudySessionController < Api::V1::Workplace::Workplace
   end
 
   def answer_study_card
-    return_obj = StudyService::Builder.update_study_card_by_user_response(study_card_params, @study_card, current_user)
+    return_obj = StudyService::Builder.update_study_card_by_user_response(study_card_params, @study_session, @study_card , current_user)
     render json: return_obj, status: :ok
   end
 
@@ -30,6 +31,15 @@ class Api::V1::Workplace::StudySessionController < Api::V1::Workplace::Workplace
       return render json: RenderUtil.render_json_obj([StudyCard.not_found_message]), status: :not_found if @study_card.blank?
     rescue
       return render json: RenderUtil.render_json_obj([StudyCard.not_found_message]), status: :not_found
+    end
+  end
+
+  def set_study_session
+    begin
+      @study_session = StudySession.find_by_id(params[:id])
+      return render json: RenderUtil.render_json_obj([StudySession.not_found_message]), status: :not_found if @study_session.blank?
+    rescue
+      return render json: RenderUtil.render_json_obj([StudySession.not_found_message]), status: :not_found
     end
   end
 

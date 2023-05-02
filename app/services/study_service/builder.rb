@@ -41,19 +41,50 @@ module StudyService
       )
     end
 
-    def self.update_study_card_by_user_response(study_card_params, study_card, current_user)
+    def self.update_study_card_by_user_response(study_card_params, study_session, study_card, current_user)
       #check authorized
-      authorized = StudyService::Validator.check_study_card_authorized(study_card, current_user)
-      return RenderUtil.render_json_obj("You aren't authorized on study card") unless authorized
+      authorized, msg = StudyService::Validator.check_study_card_authorized(study_card, current_user)
+      return RenderUtil.render_json_obj(msg) unless authorized
       # update user result
       study_card&.results[:user_answers] = study_card_params[:user_answers]
       study_card&.results[:answered] = true
       study_card&.results[:success] = study_card_params[:user_answers]&.sort == study_card&.results['result_list']&.sort
+      study_card.status = 'submitted'
       study_card.save!
+
+      #update study_session result
+      study_session = update_study_session(study_session)
+
       return RenderUtil.render_json_obj(
-        [StudyCard.update_success_message],
-        study_card
+        [StudyCard.update_success_message],{
+          study_session: study_session,
+          study_card: study_card
+        }
       )
+    end
+
+    private
+
+    def self.update_study_session study_session
+      #reload info and study card
+      study_session.reload
+
+      study_cards = study_session&.study_cards
+      total_question = study_cards.count
+      total_answer = 0
+      total_success_answer = 0
+      study_cards.each do |study_card|
+        next unless study_card.results
+        total_answer += 1 if study_card.results.has_key?('answered')
+        total_success_answer += 1 if study_card.results.has_key?('success') && study_card.results['success'] == true
+      end
+      study_session.results = {
+        total_question: total_question,
+        total_answer: total_answer,
+        total_success_answer: total_success_answer
+      }
+      study_session.save!
+      study_session
     end
 
 
