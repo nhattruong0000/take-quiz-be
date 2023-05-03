@@ -2,9 +2,7 @@ module StudyService
   module Validator
     def self.check_study_card_authorized(study_card, current_user)
       #study_card already have submitted
-      if study_card&.status == 'submitted'
-        return [false, 'Study card already have submitted']
-      end
+      return [false, 'Study card already have submitted'] if study_card&.status == 'submitted'
 
       #study session still acitve
       session_authorized = study_card&.study_session&.status == 'active'
