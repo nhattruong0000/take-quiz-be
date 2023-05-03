@@ -1,10 +1,10 @@
 module TestService
   module Builder
     def self.generate_test_session(test_params, card_collection, current_user)
-      authorized = CardCollectionService::Validator.check_card_collection_authorized(card_collection, current_user)
-      return RenderUtil.render_json_obj("You aren't authorized on card collection") unless authorized
+      authorized, msg = CardCollectionService::Validator.check_card_collection_authorized(card_collection, current_user)
+      return RenderUtil.render_json_obj(msg) unless authorized
 
-      test_params = QuestionService::Util.default_configs(test_params)
+      test_params = QuestionService::Util.default_configs_for_test(test_params)
 
       test_cards = []
       test_session = nil
@@ -31,7 +31,10 @@ module TestService
         TestCard.transaction do
           test_cards.each(&:save!)
         end
+
       end
+      #set schedule to close the test session
+      set_scheudle_for_test_session(test_params, test_session)
       return RenderUtil.render_json_obj(
         [TestSession.create_success_message],
         {
@@ -89,6 +92,13 @@ module TestService
         ['Submit test session successfully!'],
         TestService::Serializer.test_session_with_test_cards(test_session)
       )
+    end
+
+    private
+
+    def self.set_scheudle_for_test_session(test_params, test_session)
+      execution_time = test_params[:configs][:execution_time] + 1 #add delay time to cover lag time between BE and FE
+      TestSessionExecutionTimeJob.perform_at(execution_time.minutes.from_now, test_session.id)
     end
 
   end

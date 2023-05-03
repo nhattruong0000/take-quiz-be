@@ -1,0 +1,4 @@
+test_session_execution_time:
+  cron: "30 0 1 * *"
+  class: "TestSessionExecutionTimeJob"
+  queue: "default"

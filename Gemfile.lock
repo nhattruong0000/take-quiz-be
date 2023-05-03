@@ -77,14 +77,20 @@ GEM
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
     concurrent-ruby (1.2.2)
+    connection_pool (2.2.5)
     crass (1.0.6)
     date (3.3.3)
     debug (1.7.2)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
     erubi (1.12.0)
+    et-orbi (1.2.7)
+      tzinfo
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
+    fugit (1.6.0)
+      et-orbi (~> 1, >= 1.2.7)
+      raabro (~> 1.4)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.13.0)
@@ -126,6 +132,7 @@ GEM
       nio4r (~> 2.0)
     pundit (2.3.0)
       activesupport (>= 3.0.0)
+    raabro (1.4.0)
     racc (1.6.2)
     rack (2.2.7)
     rack-cors (2.0.1)
@@ -163,8 +170,20 @@ GEM
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
+    redis (4.8.0)
+    redis-namespace (1.9.0)
+      redis (>= 4)
     reline (0.3.3)
       io-console (~> 0.5)
+    sidekiq (6.5.6)
+      connection_pool (>= 2.2.5)
+      rack (~> 2.0)
+      redis (>= 4.5.0, < 5)
+    sidekiq-cron (1.7.0)
+      fugit (~> 1)
+      sidekiq (>= 4.2.1)
+    sidekiq-failures (1.0.4)
+      sidekiq (>= 4.0.0)
     thor (1.2.1)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -195,6 +214,10 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.0.4, >= 7.0.4.3)
   ransack
+  redis-namespace
+  sidekiq
+  sidekiq-cron
+  sidekiq-failures
   tzinfo-data
 
 RUBY VERSION

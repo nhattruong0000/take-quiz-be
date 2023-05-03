@@ -1,8 +1,8 @@
 module StudyService
   module Builder
     def self.generate_study_session(study_params, card_collection, current_user)
-      authorized = CardCollectionService::Validator.check_card_collection_authorized(card_collection, current_user)
-      return RenderUtil.render_json_obj("You aren't authorized on card collection") unless authorized
+      authorized, msg = CardCollectionService::Validator.check_card_collection_authorized(card_collection, current_user)
+      return RenderUtil.render_json_obj(msg) unless authorized
 
       study_params = QuestionService::Util.default_configs(study_params)
 
@@ -45,12 +45,17 @@ module StudyService
       #check authorized
       authorized, msg = StudyService::Validator.check_study_card_authorized(study_card, current_user)
       return RenderUtil.render_json_obj(msg) unless authorized
+
       # update user result
       study_card&.results[:user_answers] = study_card_params[:user_answers]
       study_card&.results[:answered] = true
       study_card&.results[:success] = study_card_params[:user_answers]&.sort == study_card&.results['result_list']&.sort
       study_card.status = 'submitted'
       study_card.save!
+
+      card = study_card&.card
+      # update card information
+      update_card_info(card, study_card)
 
       #update study_session result
       study_session = update_study_session(study_session)
@@ -65,7 +70,18 @@ module StudyService
 
     private
 
-    def self.update_study_session study_session
+    def self.update_card_info(card, study_card)
+      card.study_count += 1
+      if study_card&.results[:success]
+        card.success_count += 1
+      else
+        card.failed_count += 1
+      end
+      card.study_last_time = DateTime.now()
+      card.save!
+    end
+
+    def self.update_study_session(study_session)
       #reload info and study card
       study_session.reload
 
@@ -86,8 +102,6 @@ module StudyService
       study_session.save!
       study_session
     end
-
-
 
   end
 end
