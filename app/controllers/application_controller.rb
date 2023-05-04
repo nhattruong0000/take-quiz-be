@@ -30,6 +30,10 @@ class ApplicationController < ActionController::API
     return 0 unless token
 
     begin
+      p '&&&&&&&&&&&&&&&&&&&&&&&&&'
+      p Rails.application.secrets.secret_key_base
+      p Rails.application.credentials.jwt_auth.iss
+      p Rails.application.credentials.jwt_auth.aud
       decoded_token = JWT.decode token,
                                  Rails.application.secrets.secret_key_base,
                                  true,
@@ -38,7 +42,9 @@ class ApplicationController < ActionController::API
                                    verify_aud: true,
                                    aud: Rails.application.credentials.jwt_auth.aud,
                                    algorithm: 'HS256' }
+      p decoded_token
       $current_user = User.find_by_id(decoded_token.first['user']['id'])
+      p $current_user
       return 0 unless $current_user
 
       # check locked
