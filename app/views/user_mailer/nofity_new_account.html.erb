@@ -1,0 +1,31 @@
+<!-- CTA / Secondary -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="p0-15-30" style="padding: 20px 40px 50px 40px;">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="h3 center pb15" style="color:#000000; font-family:Arial, sans-serif; font-size:22px; line-height:32px; text-align:center; padding-bottom:15px;">
+            Tài khoản của bạn đã được tạo.
+          </td>
+        </tr>
+        <tr>
+          <td class="text center pb15" style="color:#666666; font-family:Arial, sans-serif; font-size:15px; line-height:28px; text-align:center; padding-bottom:15px;">
+            Xin chào <b><%= @user.email %></b>, tài khoản của bạn đã được tạo trên hệ thống Take Quiz, hãy dùng email
+            này
+            hoặc tên tài khoản <b><%= @user.username %></b> để đăng nhập vào hệ thống.
+            <span class="m-hide"><br/></span>Email: <%= @user.email %>
+            <span class="m-hide"><br/></span>Tài khoản: <%= @user.username %>
+            <span class="m-hide"><br/></span>Mật khẩu: <%= @user.initial_password %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td height="1" bgcolor="#e5e5e5" class="img" style="font-size:0pt; line-height:0pt; text-align:left;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="padding-top: 40px;"></td>
+  </tr>
+</table>
+<!-- END CTA / Secondary -->

@@ -106,13 +106,12 @@ class AuthenticationController < ApplicationController
 
   def _build_jwt(user, valid_for_minutes = Rails.configuration.x.oauth.default_exp)
     exp = Time.now.to_i + (valid_for_minutes)
-    payload = { "iss": Rails.configuration.x.oauth.iss,
+    payload = { "iss": Rails.application.credentials.jwt_auth.iss,
                 "exp": exp,
-                "aud": Rails.configuration.x.oauth.aud,
+                "aud": Rails.application.credentials.jwt_auth.aud,
                 "user": _serialize_user(user) }
 
-    JWT.encode payload, Rails.configuration.x.oauth.jwt_secret, 'HS256'
-    # JWT.encode payload, Rails.application.secrets.secret_key_base, 'HS256'
+    JWT.encode payload, Rails.application.secrets.secret_key_base, 'HS256'
   end
 
   def _login_params

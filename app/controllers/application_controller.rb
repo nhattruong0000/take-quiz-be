@@ -7,7 +7,6 @@ class ApplicationController < ActionController::API
   before_action :authentication_user!
 
   helper_method :current_user
-  helper_method :return_object
 
   private
 
@@ -27,29 +26,17 @@ class ApplicationController < ActionController::API
     $current_user
   end
 
-  def return_object(msg, obj)
-    return { message: msg, data: obj }
-  end
-
   def valid_token(token)
     return 0 unless token
 
     begin
-      # decoded_token = JWT.decode token,
-      #                            Rails.application.secrets.secret_key_base,
-      #                            true,
-      #                            { verify_iss: true,
-      #                              iss: Rails.configuration.x.oauth.iss,
-      #                              verify_aud: true,
-      #                              aud: Rails.configuration.x.oauth.aud,
-      #                              algorithm: 'HS256' }
       decoded_token = JWT.decode token,
-                                 Rails.configuration.x.oauth.jwt_secret,
+                                 Rails.application.secrets.secret_key_base,
                                  true,
                                  { verify_iss: true,
-                                   iss: Rails.configuration.x.oauth.iss,
+                                   iss: Rails.application.credentials.jwt_auth.iss,
                                    verify_aud: true,
-                                   aud: Rails.configuration.x.oauth.aud,
+                                   aud: Rails.application.credentials.jwt_auth.aud,
                                    algorithm: 'HS256' }
       $current_user = User.find_by_id(decoded_token.first['user']['id'])
       return 0 unless $current_user

@@ -38,6 +38,20 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.delivery_method = :smtp
+  host = 'quiz.takeit.com.vn' #replace with your own url
+  config.action_mailer.default_url_options = { host: host }
+
+  # SMTP settings for gmail
+  config.action_mailer.smtp_settings = {
+    address: Rails.application.credentials.smtp_mail.address,
+    port: Rails.application.credentials.smtp_mail.port,
+    user_name: Rails.application.credentials.smtp_mail.user_name,
+    password: Rails.application.credentials.smtp_mail.password,
+    authentication: Rails.application.credentials.smtp_mail.authentication,
+    enable_starttls_auto: Rails.application.credentials.smtp_mail.enable_starttls_auto
+  }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -62,8 +76,5 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
-  config.x.oauth.jwt_secret = 'dedd5478-9df2-49d6-b7dc-610623e0fc58'
-  config.x.oauth.aud = '866ac26d-fb6a-49af-a80d-e6fc7e4c7501'
-  config.x.oauth.iss = 'takequiz-api'
   config.x.oauth.default_exp = 24 * 60 * 60 #minutes
 end
