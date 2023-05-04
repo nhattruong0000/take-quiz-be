@@ -4,6 +4,10 @@ class Api::V1::Workplace::TestSessionPolicy < ApplicationPolicy
     super(user, record)
   end
 
+  def index?
+    STUDENT_DEFAULT_ROLES.include?(user.role)
+  end
+
   def create?
     STUDENT_DEFAULT_ROLES.include?(user.role)
   end

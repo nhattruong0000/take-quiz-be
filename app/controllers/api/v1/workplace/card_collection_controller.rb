@@ -27,7 +27,7 @@ class Api::V1::Workplace::CardCollectionController < Api::V1::Workplace::Workpla
 
   def update
     @card_collection.attributes = card_collection_params
-    return (render json: RenderUtil.render_json_obj([CardCollection.update_success_message], _serialize_card_collection(@card_collection)), status: :ok) if @card_collection.save
+    return (render json: RenderUtil.render_json_obj([CardCollection.update_success_message], CardCollectionService::Serializer.card_collection(@card_collection)), status: :ok) if @card_collection.save
     render json: { errors: @card_collection.errors.full_messages }, status: :bad_request
   end
 
@@ -51,14 +51,6 @@ class Api::V1::Workplace::CardCollectionController < Api::V1::Workplace::Workpla
     params[:card_collection].permit(
       :name, :description
     )
-  end
-
-  def _serialize_card_collection(data)
-    data.as_json()
-  end
-
-  def _serialize_card(data)
-    data.as_json()
   end
 
 end

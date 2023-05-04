@@ -68,6 +68,18 @@ module StudyService
       )
     end
 
+    def self.close_study_session(study_session, current_user)
+      authorized, msg = CardCollectionService::Validator.check_card_collection_authorized(study_session&.card_collection, current_user)
+      return RenderUtil.render_json_obj(msg) unless authorized
+
+      study_session.status = 'closed'
+      study_session.save!
+      return RenderUtil.render_json_obj(
+        [StudySession.update_success_message],
+          study_session
+      )
+    end
+
     private
 
     def self.update_card_info(card, study_card)

@@ -2,7 +2,12 @@ class Api::V1::Workplace::StudySessionController < Api::V1::Workplace::Workplace
 
   before_action :set_card_collection, only: [:create]
   before_action :set_study_card, only: [:answer_study_card]
-  before_action :set_study_session, only: [:answer_study_card]
+  before_action :set_study_session, only: [:answer_study_card, :close_study_session]
+
+  def index
+    return_obj = StudyService::Searcher.study_sessions(params, current_user)
+    render json: return_obj, status: :ok
+  end
 
   def create
     return_obj = StudyService::Builder.generate_study_session(study_session_params, @card_collection, current_user)
@@ -13,6 +18,13 @@ class Api::V1::Workplace::StudySessionController < Api::V1::Workplace::Workplace
     return_obj = StudyService::Builder.update_study_card_by_user_response(study_card_params, @study_session, @study_card , current_user)
     render json: return_obj, status: :ok
   end
+
+  def close_study_session
+    return_obj = StudyService::Builder.close_study_session(@study_session, current_user)
+    render json: return_obj, status: :ok
+  end
+
+
 
   private
 

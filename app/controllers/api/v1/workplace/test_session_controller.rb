@@ -3,6 +3,10 @@ class Api::V1::Workplace::TestSessionController < Api::V1::Workplace::WorkplaceB
   before_action :set_test_card, only: [:answer_test_card]
   before_action :set_test_session, only: [:submit_test]
 
+  def index
+    return_obj = TestService::Searcher.test_sessions(params, current_user)
+    render json: return_obj, status: :ok
+  end
   def create
     return_obj = TestService::Builder.generate_test_session(test_session_params, @card_collection, current_user)
     render json: return_obj, status: :ok

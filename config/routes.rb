@@ -40,11 +40,14 @@ Rails.application.routes.draw do
         delete 'card/', to: 'card#destroy'
 
         patch 'study_session/:id/study_card/:study_card_id', to: 'study_session#answer_study_card'
-        resources :study_session, only: [:create]
+        put 'study_session/:id/close_study_session/', to: 'study_session#close_study_session'
+        resources :study_session, only: [:index, :create]
+
+
 
         patch 'test_session/:id/test_card/:test_card_id', to: 'test_session#answer_test_card'
         put 'test_session/:id/submit_test/', to: 'test_session#submit_test'
-        resources :test_session, only: [:create]
+        resources :test_session, only: [:index, :create]
       end
     end
   end
