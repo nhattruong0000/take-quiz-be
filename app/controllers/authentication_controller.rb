@@ -111,6 +111,10 @@ class AuthenticationController < ApplicationController
                 "aud": Rails.application.credentials.jwt_auth.aud,
                 "user": _serialize_user(user) }
 
+    p '************************** authen'
+    p Rails.application.secrets.secret_key_base
+    p Rails.application.credentials.secret_key_base
+
     JWT.encode payload, Rails.application.secrets.secret_key_base, 'HS256'
   end
 

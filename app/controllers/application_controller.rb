@@ -32,6 +32,7 @@ class ApplicationController < ActionController::API
     begin
       p '&&&&&&&&&&&&&&&&&&&&&&&&&'
       p Rails.application.secrets.secret_key_base
+      p Rails.application.credentials.secret_key_base
       p Rails.application.credentials.jwt_auth.iss
       p Rails.application.credentials.jwt_auth.aud
       decoded_token = JWT.decode token,
