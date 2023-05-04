@@ -16,6 +16,7 @@ module QuestionService
 
           result_obj['result_list'] = [is_card_question ? card.answer : card.question]
           result_obj['is_multiple_result'] = false
+          result_obj['answered'] = false
 
           answer_arr = [is_card_question ? card.answer : card.question]
           answer_arr =  answer_arr + (is_card_question ? list_answer.uniq.excluding(card.answer).sample(3) : list_question.uniq.excluding(card.question).sample(3))
@@ -29,7 +30,8 @@ module QuestionService
           result_obj['result_list'] = [is_right_as_the_answer]
           result_obj['is_multiple_result'] = false
           result_obj['answered'] = false
-          answer_obj['answers'] = [true, false]
+
+          answer_obj['answer_list'] = [true, false]
         end
 
         return_obj[card.id] = {
