@@ -28,7 +28,7 @@ class Api::V1::Workplace::CardController < Api::V1::Workplace::WorkplaceBaseCont
   end
 
   def card_params
-    params[:obj].permit(:card_collection_id, cards: [:id, :question, :answer])
+    params[:obj].permit(:card_collection_id, cards: [:id, :question, :answer, :set_favorite])
   end
 
 end

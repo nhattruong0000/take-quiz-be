@@ -17,8 +17,7 @@ module CardService
       card_hash_by_id = card_params.map { |r| [r['id'], r] }.to_h
       cards = Card.where(id: card_params.map { |item| item[:id] }, card_collection_id: card_collection.id, user_id: current_user.id)
       cards.each do |card|
-        card.question = card_hash_by_id[card.id][:question]
-        card.answer = card_hash_by_id[card.id][:answer]
+        card.attributes = card_hash_by_id[card.id]
         card_need_to_save << card
       end
       Card.transaction do
