@@ -1,7 +1,7 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+As an open-source project, our goal is to develop an application similar to Quizlet, which is a user-friendly and convenient tool for studying. The project is being developed using Ruby on Rails as the backend and VueJS (in a separate repository) as the frontend.
+
 
 Things you may want to cover:
 
